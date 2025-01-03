@@ -5,17 +5,62 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --card-bg: #f3f4f6;
+  --card-border: #e5e7eb;
+  --hover-border: #d1d5db;
+  --input-bg: #f9fafb;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card-bg: #1f2937;
+  --card-border: #374151;
+  --hover-border: #4b5563;
+  --input-bg: #111827;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+.dark body {
+  background: #304055;
+}
+
+/* Card styles */
+.snippet-card {
+  @apply rounded-lg overflow-hidden border transition-all;
+  background: var(--card-bg);
+  border-color: var(--card-border);
+}
+
+.snippet-card:hover {
+  border-color: var(--hover-border);
+}
+
+/* Input styles */
+.input-field {
+  @apply rounded-lg px-4 py-2 w-full focus:outline-none border pl-10;
+  background: var(--input-bg);
+  border-color: var(--card-border);
+  color: var(--text-primary);
+}
+
+.input-field:focus {
+  border-color: var(--hover-border);
+}
+
+/* Text styles */
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
 }
