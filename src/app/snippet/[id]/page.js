@@ -7,11 +7,15 @@ import Navbar from "@/components/Navbar";
 import { useEffect, useState, use } from "react";
 import { supabase } from "@/lib/supabase";
 import CopyButton from "@/components/CopyButton";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SnippetPage({ params }) {
   const resolvedParams = use(params);
   const [snippet, setSnippet] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchSnippet() {
@@ -20,19 +24,27 @@ export default function SnippetPage({ params }) {
           .from("snippets")
           .select("*")
           .eq("id", resolvedParams.id)
+          .eq("user_id", user.id)
           .single();
 
         if (error) throw error;
+        if (!data) {
+          router.push("/");
+          return;
+        }
         setSnippet(data);
       } catch (error) {
         console.error("Error fetching snippet:", error);
+        router.push("/");
       } finally {
         setLoading(false);
       }
     }
 
-    fetchSnippet();
-  }, [resolvedParams.id]);
+    if (user) {
+      fetchSnippet();
+    }
+  }, [resolvedParams.id, user, router]);
 
   if (loading) {
     return (

@@ -1,5 +1,6 @@
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata = {
   title: "Create Next App",
@@ -10,7 +11,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

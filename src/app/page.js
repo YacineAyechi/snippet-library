@@ -7,12 +7,14 @@ import Navbar from "@/components/Navbar";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import CopyButton from "@/components/CopyButton";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
   const [snippets, setSnippets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("all");
+  const { user } = useAuth();
 
   useEffect(() => {
     async function fetchSnippets() {
@@ -20,6 +22,7 @@ export default function Home() {
         const { data, error } = await supabase
           .from("snippets")
           .select("*")
+          .eq("user_id", user.id)
           .order("created_at", { ascending: false });
 
         if (!error) {
@@ -30,8 +33,10 @@ export default function Home() {
       }
     }
 
-    fetchSnippets();
-  }, []);
+    if (user) {
+      fetchSnippets();
+    }
+  }, [user]);
 
   const filteredSnippets = snippets.filter((snippet) => {
     const matchesSearch =
@@ -73,8 +78,17 @@ export default function Home() {
             >
               <option value="all">All</option>
               <option value="javascript">JavaScript</option>
+              <option value="typescript">TypeScript</option>
               <option value="python">Python</option>
               <option value="java">Java</option>
+              <option value="cpp">C++</option>
+              <option value="csharp">C#</option>
+              <option value="c">C</option>
+              <option value="ruby">Ruby</option>
+              <option value="rust">Rust</option>
+              <option value="go">Go</option>
+              <option value="kotlin">Kotlin</option>
+              <option value="swift">Swift</option>
             </select>
             <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
               <svg

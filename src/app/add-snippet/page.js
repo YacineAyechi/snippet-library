@@ -1,15 +1,17 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Type, FileText, Code, Languages } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import CodeBlock from "@/components/CodeBlock";
 import Navbar from "@/components/Navbar";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AddSnippet() {
   const router = useRouter();
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [snippet, setSnippet] = useState({
     title: "",
@@ -31,6 +33,7 @@ export default function AddSnippet() {
             description: snippet.description,
             language: snippet.language,
             code: snippet.code,
+            user_id: user.id,
           },
         ])
         .select()
@@ -70,16 +73,21 @@ export default function AddSnippet() {
                 <label htmlFor="title" className="block text-secondary mb-2">
                   Title
                 </label>
-                <input
-                  type="text"
-                  id="title"
-                  value={snippet.title}
-                  onChange={(e) =>
-                    setSnippet({ ...snippet, title: e.target.value })
-                  }
-                  className="input-field"
-                  placeholder="Enter snippet title"
-                />
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
+                    <Type size={20} />
+                  </div>
+                  <input
+                    type="text"
+                    id="title"
+                    value={snippet.title}
+                    onChange={(e) =>
+                      setSnippet({ ...snippet, title: e.target.value })
+                    }
+                    className="input-field pl-10"
+                    placeholder="Enter snippet title"
+                  />
+                </div>
               </div>
 
               <div>
@@ -89,50 +97,74 @@ export default function AddSnippet() {
                 >
                   Description
                 </label>
-                <input
-                  type="text"
-                  id="description"
-                  value={snippet.description}
-                  onChange={(e) =>
-                    setSnippet({ ...snippet, description: e.target.value })
-                  }
-                  className="input-field"
-                  placeholder="Enter snippet description"
-                />
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
+                    <FileText size={20} />
+                  </div>
+                  <input
+                    type="text"
+                    id="description"
+                    value={snippet.description}
+                    onChange={(e) =>
+                      setSnippet({ ...snippet, description: e.target.value })
+                    }
+                    className="input-field pl-10"
+                    placeholder="Enter snippet description"
+                  />
+                </div>
               </div>
 
               <div>
                 <label htmlFor="language" className="block text-secondary mb-2">
                   Language
                 </label>
-                <select
-                  id="language"
-                  value={snippet.language}
-                  onChange={(e) =>
-                    setSnippet({ ...snippet, language: e.target.value })
-                  }
-                  className="input-field"
-                >
-                  <option value="javascript">JavaScript</option>
-                  <option value="python">Python</option>
-                  <option value="java">Java</option>
-                </select>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
+                    <Languages size={20} />
+                  </div>
+                  <select
+                    id="language"
+                    value={snippet.language}
+                    onChange={(e) =>
+                      setSnippet({ ...snippet, language: e.target.value })
+                    }
+                    className="input-field pl-10"
+                  >
+                    <option value="javascript">JavaScript</option>
+                    <option value="typescript">TypeScript</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                    <option value="cpp">C++</option>
+                    <option value="csharp">C#</option>
+                    <option value="c">C</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="rust">Rust</option>
+                    <option value="go">Go</option>
+                    <option value="kotlin">Kotlin</option>
+                    <option value="swift">Swift</option>
+                  </select>
+                </div>
               </div>
 
               <div>
                 <label htmlFor="code" className="block text-secondary mb-2">
                   Code
                 </label>
-                <textarea
-                  id="code"
-                  value={snippet.code}
-                  onChange={(e) =>
-                    setSnippet({ ...snippet, code: e.target.value })
-                  }
-                  rows={8}
-                  className="input-field font-mono"
-                  placeholder="Enter your code here"
-                />
+                <div className="relative">
+                  <div className="absolute mt-3 left-3 flex items-center pointer-events-none text-gray-400">
+                    <Code size={20} />
+                  </div>
+                  <textarea
+                    id="code"
+                    value={snippet.code}
+                    onChange={(e) =>
+                      setSnippet({ ...snippet, code: e.target.value })
+                    }
+                    rows={8}
+                    className="input-field font-mono pl-10"
+                    placeholder="Enter your code here"
+                  />
+                </div>
               </div>
 
               {snippet.code && (
