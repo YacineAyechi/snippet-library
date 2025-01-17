@@ -237,7 +237,7 @@ export default function Home() {
               <ul className="space-y-3">
                 <li>
                   <a
-                    href="https://github.com/yourusername/codesnip"
+                    href="https://github.com/YacineAyechi/snippet-library"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-secondary hover:text-primary transition-colors inline-flex items-center gap-2 group"
@@ -251,7 +251,7 @@ export default function Home() {
                 </li>
                 <li>
                   <a
-                    href="mailto:support@codesnip.com"
+                    href="mailto:yacineayachi9@gmail.com"
                     className="text-secondary hover:text-primary transition-colors inline-flex items-center gap-2 group"
                   >
                     <Mail
