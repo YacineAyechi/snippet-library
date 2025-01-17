@@ -33,18 +33,17 @@ body {
   background: #304055;
 }
 
-/* Card styles */
 .snippet-card {
   @apply rounded-lg overflow-hidden border transition-all;
   background: var(--card-bg);
   border-color: var(--card-border);
+  border: 1px solid white;
 }
 
 .snippet-card:hover {
   border-color: var(--hover-border);
 }
 
-/* Input styles */
 .input-field {
   @apply rounded-lg px-4 py-2 w-full focus:outline-none border pl-10;
   background: var(--input-bg);
@@ -56,7 +55,6 @@ body {
   border-color: var(--hover-border);
 }
 
-/* Text styles */
 .text-primary {
   color: var(--text-primary);
 }
